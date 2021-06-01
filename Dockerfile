@@ -9,12 +9,3 @@ RUN apt-get update \
   && apt-get install -y docker-ce docker-ce-cli containerd.io
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-
-FROM runtime as testEnv
-RUN apt-get install -y coreutils bats
-ADD test.bats /test.bats
-ADD mock.sh /usr/local/mock/docker
-ADD mock.sh /usr/local/mock/date
-RUN /test.bats
-
-FROM runtime

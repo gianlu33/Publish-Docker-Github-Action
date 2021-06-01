@@ -55,6 +55,8 @@ main() {
 
   build
 
+  echo "::set-output name=tag::${FIRST_TAG}"
+
   if usesBoolean "${INPUT_NO_PUSH}"; then
     if uses "${INPUT_USERNAME}" && uses "${INPUT_PASSWORD}"; then
       docker logout
@@ -66,7 +68,6 @@ main() {
     push
   fi
 
-  echo "::set-output name=tag::${FIRST_TAG}"
   echo "tag=${FIRST_TAG}" >> "$GITHUB_OUTPUT"
   if uses "${INPUT_PLATFORMS}"; then
     DIGEST=$(jq -r '."containerimage.digest"' metadata.json)
